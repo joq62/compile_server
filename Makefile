@@ -27,6 +27,29 @@ all:
 	git status
 	echo Ok there you go!
 	#INFO: no_ebin_commit ENDED SUCCESSFUL
+target:
+	#INFO: with_ebin_commit STARTED
+	#INFO: Cleaning up to prepare build STARTED	 
+	#INFO: Deleting crash reports
+	rm -rf erl_cra* rebar3_crashreport;
+	rm -rf *~ */*~ */*/*~ */*/*/*~;
+	#INFO: Deleting euinit test applications dirs
+	rm -rf adder3;
+	rm -rf ebin;
+	rm -rf Mnesia.*;
+	rm -rf test_ebin;
+	#INFO: Deleting tilde files and beams
+	#INFO: Deleting files and dirs created during builds
+	rm -rf _build;
+	rm -rf ebin;
+	rm -rf rebar.lock
+	#INFO: Compile application
+	rm -rf release
+	rebar3 compile
+	rebar3 release
+	./_build/default/rel/compile_server/bin/compile_server daemon	
+	echo Ok there you go!
+	#INFO: no_ebin_commit ENDED SUCCESSFUL
 clean:
 	#INFO: clean STARTED
 	#INFO: with_ebin_commit STARTED
